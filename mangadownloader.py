@@ -33,7 +33,7 @@ def test():
     for i in match:
         print(i)
 
-def load_chapter_new(manga_name, chap_nbr):
+def load_chapter(manga_name, chap_nbr):
     fwcURL = "https://www.scan-vf.co/" + manga_name + "/chapitre-" + str(chap_nbr) #URL to read
     req = urllib.request.Request(fwcURL,  headers={'User-Agent' : "Magic Browser"})
     mylines = urllib.request.urlopen(req).readlines()
@@ -48,25 +48,6 @@ def load_chapter_new(manga_name, chap_nbr):
         print("page number " + '%02d' % (page + 1))
     print()
 
-        
-        
-
-def load_chapter(manga_name, base_url, chap_nbr):
-    folder_url = base_url + str(chap_nbr)
-    jpg_num = 1
-    fault = False
-    while (not(fault)):
-        try:
-            req = urllib.request.Request(folder_url + "/" + '%02d' % jpg_num + ".jpg", headers={'User-Agent' : "Magic Browser"}) 
-            con = urllib.request.urlopen( req )
-            f = io.BytesIO(con.read())
-            byteImg = Image.open(f)
-            byteImg.save("~/Documents/" + manga_name + "/chapter-" + str(chap_nbr) + "/" + '%02d' % jpg_num + ".jpg", 'JPEG')
-            print("page number " + '%02d' % jpg_num)
-            jpg_num += 1
-        except:
-            fault = True
-    print("finished chap\n")
 
 
 def folder_manager(manga_name, chapter):
@@ -79,7 +60,7 @@ def folder_manager(manga_name, chapter):
         if not(os.path.isdir(os.path.expanduser("~/Documents/" + manga_name + "/chapter-" + str(done)))):
             print("Downloading Chapter " + str(done) + "\n")
             os.mkdir(os.path.expanduser("~/Documents/" + manga_name + "/chapter-" + str(done)))
-            load_chapter_new(manga_name, done)
+            load_chapter(manga_name, done)
         else :
             print("Chapter already downloaded" + str(done) + "\n")
         done += 1
