@@ -10,12 +10,6 @@ import re
 url2 =  "https://www.scan-vf.co/uploads/manga/one_piece/chapters/chapitre-1/01.jpg"
 base_url =  "https://www.scan-vf.co/uploads/manga/one_piece/chapters"
 
-#req = urllib.request.Request(url2, headers={'User-Agent' : "Magic Browser"}) 
-#con = urllib.request.urlopen( req )
-#f = io.BytesIO(con.read())
-#byteImg = Image.open(f)
-#byteImg.save('test.jpg', 'JPEG')
-
 def fetch_url_data(url):
     #print("fetching image url ")
     try :
@@ -45,10 +39,16 @@ def load_chapter(manga_name, chap_url, chap_nbr):
         byteImg = Image.open(f)
         end = match[page][-3:]
         if end == "png" :
-            byteImg.save(os.path.expanduser("~/Documents/MangaDownloader/" + manga_name + "/chapter-" + str(chap_nbr) + "/" + '%02d' % (page + 1)  + ".png"), 'PNG')
+            try:
+                byteImg.save(os.path.expanduser("~/Documents/MangaDownloader/" + manga_name + "/chapter-" + str(chap_nbr) + "/" + '%02d' % (page + 1)  + ".png"), 'PNG')
+            except:
+                byteImg.convert('RGB').save(os.path.expanduser("~/Documents/MangaDownloader/" + manga_name + "/chapter-" + str(chap_nbr) + "/" + '%02d' % (page + 1)  + ".png"), 'PNG')
             print("page number " + '%02d' % (page + 1) + ".png")
         else:
-            byteImg.save(os.path.expanduser("~/Documents/MangaDownloader/" + manga_name + "/chapter-" + str(chap_nbr) + "/" + '%02d' % (page + 1)  + ".jpg"), "JPEG")
+            try:
+                byteImg.save(os.path.expanduser("~/Documents/MangaDownloader/" + manga_name + "/chapter-" + str(chap_nbr) + "/" + '%02d' % (page + 1)  + ".jpg"), "JPEG")
+            except:
+                byteImg.convert('RGB').save(os.path.expanduser("~/Documents/MangaDownloader/" + manga_name + "/chapter-" + str(chap_nbr) + "/" + '%02d' % (page + 1)  + ".jpg"), "JPEG")
             print("page number " + '%02d' % (page + 1) + ".jpg")
     print()
 
@@ -88,7 +88,7 @@ def manga_dl():
     except:
         print("nope")
 
-folder_manager("one_piece",0)
+folder_manager("hunter-x-hunter",0)
 
 
 
