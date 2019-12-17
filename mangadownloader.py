@@ -7,8 +7,8 @@ import os
 import re
 
 
-url2 =  "https://www.scan-vf.co/uploads/manga/one_piece/chapters/chapitre-1/01.jpg"
-base_url =  "https://www.scan-vf.co/uploads/manga/one_piece/chapters"
+url2 =  "https://www.scan-vf.net/uploads/manga/one_piece/chapters/chapitre-1/01.jpg"
+base_url =  "https://www.scan-vf.net/uploads/manga/one_piece/chapters"
 
 def fetch_url_data(url):
     #print("fetching image url ")
@@ -28,7 +28,7 @@ def fetch_url(url):
         return fetch_url_data(url)
 
 def load_chapter(manga_name, chap_url, chap_nbr):
-    fwcURL = "https://www.scan-vf.co/" + manga_name + chap_url #URL to read
+    fwcURL = "https://www.scan-vf.net/" + manga_name + chap_url #URL to read
     mylines = fetch_url(fwcURL)
     print("Found URLs:")
     match = re.findall(r'data-src=\\[\']?\s([^\'" >]+)', str(mylines))
@@ -53,7 +53,7 @@ def load_chapter(manga_name, chap_url, chap_nbr):
     print()
 
 def find_chapter(manga_name):
-    fwcURL = "https://www.scan-vf.co/" + manga_name #URL to read
+    fwcURL = "https://www.scan-vf.net/" + manga_name #URL to read
     mylines = fetch_url(fwcURL)
     match = re.findall(r'href=[\'"]?' + fwcURL + '([^\'" >]+)', str(mylines))
     return match
@@ -83,12 +83,9 @@ def manga_dl():
     print(manga_name)
 
     try:
-        req = urllib.urlopen("https://www.scan-vf.co/one_piece/chapitre-1") 
+        req = urllib.urlopen("https://www.scan-vf.net/one_piece/chapitre-1") 
         print("it exist")
     except:
         print("nope")
 
-folder_manager("hunter-x-hunter",0)
-
-
-
+folder_manager("one_piece",0)
